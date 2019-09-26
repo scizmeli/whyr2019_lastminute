@@ -37,7 +37,8 @@ server <- function(input, output, session) {
         #browser()
         
         df <- data.frame(long=pls$lng, lat=pls$lat, layerId=1:nrow(pls),name=pls$name,
-                   vicinity = pls$vicinity, rating=pls$rating)
+                   vicinity = pls$vicinity, rating=pls$rating, ratecol = ratecol(pls$rating),
+                   stringsAsFactors = FALSE)
         #occupancy_index=occupancy_index        day=pls$day, hour=pls$hour
         
     })
@@ -56,12 +57,18 @@ server <- function(input, output, session) {
                              sep = "<br/>")
         p <- points()
         set.seed(1)
+        #browser()
         leaflet() %>%
             addTiles() %>%
-            addMarkers(data = p[sample(1:nrow(p), min(200, nrow(p))), 
-                                1:2], 
-                       layerId = p[,3],
-                       popup = popupStr)
+            addCircleMarkers(data = p[sample(1:nrow(p), min(200, nrow(p))), 
+                                      ], 
+                             layerId = p[,3],
+                             #color = ratecol,
+                             weight = 1,
+                             fillColor = ~ratecol,
+                             fillOpacity = 0.8,
+                             radius = 8,
+                             popup = popupStr)
     })
     
     # output$occlvl <- renderPlot({
