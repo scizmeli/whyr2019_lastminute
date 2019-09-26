@@ -55,6 +55,7 @@ server <- function(input, output, session) {
                              "Type:", points()$type, "Rating:", points()$rating,
                              sep = "<br/>")
         p <- points()
+        set.seed(1)
         leaflet() %>%
             addTiles() %>%
             addMarkers(data = p[sample(1:nrow(p), min(200, nrow(p))), 
@@ -63,14 +64,14 @@ server <- function(input, output, session) {
                        popup = popupStr)
     })
     
-    output$occlvl <- renderPlot({
-        isolate({
-            #myid <- currentPT()$id
-            #if (!is.null(myid)){
-                occ.plot(points()$id)#[myid])
-            #}
-        })
-    })
+    # output$occlvl <- renderPlot({
+    #     isolate({
+    #         #myid <- currentPT()$id
+    #         #if (!is.null(myid)){
+    #             occ.plot(points()$id)#[myid])
+    #         #}
+    #     })
+    # })
     
     # Generate a summary of the data ----
     # output$summary <- renderPrint({
