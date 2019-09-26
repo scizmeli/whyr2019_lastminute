@@ -15,3 +15,12 @@
    - ratings to better decide
    - time slider to allow fur future planing
    
+## Interface
+1. map
+2. selection panel with
+    - type [pulldown
+    - time [slider]
+        - hour
+        - day of week
+    - price level [range slider]
+    - rating [range slider]
