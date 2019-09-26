@@ -22,5 +22,7 @@
     - time [slider]
         - hour
         - day of week
-    - price level [range slider]
-    - rating [range slider]
+    - price level [range slider]   (*)
+    - rating [range slider]   (*)
+    
+ (*) hide when not applicable for selected type
