@@ -26,7 +26,7 @@ type.list <- function(table = places, ...){
 #' @param place_id 
 #' @param type 
 #' @param table 
-#' @param ... 
+#' @param ... unused
 #'
 #' @return
 #' @export
@@ -45,13 +45,19 @@ rating <- function(place_id,
   return(mean(ratings))
 }
 
+places4type <- function(type,
+                        table = places, 
+                        ...){
+  return(unique(unlist(table[table$type == type, 'place_id'])))
+}
+
 #' extract all ratings for given  type
 #'
 #' default relies on `places` present on search path
 #' 
 #' @param type type to rate
 #' @param table 
-#' @param ... 
+#' @param ... unused
 #'
 #' @return
 #' @export
@@ -61,7 +67,9 @@ rating <- function(place_id,
 ratings.for.type <- function(mytype,
                              table = places,
                              ...){
-  type.places <- unique(unlist(table[table$type == mytype, 'place_id']))
+  type.places <- places4type(mytype,
+                             table,
+                             ...)
   sapply(places, rating, type = mytype)
 }
 
@@ -70,6 +78,8 @@ ratings.for.type <- function(mytype,
 #' default relies on `pop` present on search path
 #' 
 #' @param place_id 
+#' @param type type [optional]
+#' @param table 
 #' @param ... 
 #'
 #' @return
@@ -77,21 +87,50 @@ ratings.for.type <- function(mytype,
 #'
 #' @examples
 occ.plot <- function(place_id, 
+                     type = NULL, 
                      table = pop,
                      ...){
   if(place_id %in% pop$place_id){
-    place.data <- subset(pop, 
-                         subset = place_id == place_id)
+    if(is.null(type)){
+      place.data <- table[table$place_id == place_id,]
+    } else {
+      place.data <- table[table$place_id == place_id &
+                            table$type == type, ]
+    }
+    new.day <- c(0,
+                 which(diff(as.numeric(factor(place.data$day))) != 0) - .5,
+                 nrow(place.data))
     x <- 1:nrow(place.data)
     plot(place.data$occupancy_index,
-         axes = FALSE
+         axes = FALSE,
+         xlab = '', 
+         ylab = 'occupancy',
+         type = 'n',
+         xaxs = 'i',
+         yaxs = 'i'
     )
-    axis(2)
+    pu <- par('usr')
+    rect(new.day[-length(new.day)], pu[3], new.day[-1], pu[4], col = c('#0000ff20','#0000ff10'), border = '#0000ff60')
+    points(place.data$occupancy_index,
+         xlab = '', 
+         ylab = 'occupancy',
+    )
+    axis(2,
+         las = 2)
     axis(1, 
          at = x,
-         labels = place.data$hhour)
+         labels = place.data$hour)
+    box()
     mean.x.day <- tapply(x, place.data$day, mean)
-    axis(1, at = mean.x.day,
-         labels = unique(place.data$day))
+    # omgp <- par('mgp')
+    # omgp[3] <- 1
+    # opar <- par(mgp = omgp)
+    # axis(1, at = mean.x.day,
+    #      labels = unique(place.data$day))
+    # par(opar)
+    ud <- unique(place.data$day)
+    text(mean.x.day[ud], -14, ud, xpd = NA)
+  } else{
+    warning("no popularity data")
   }
 }
