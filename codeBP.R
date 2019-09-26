@@ -152,7 +152,7 @@ occ.plot <- function(place_id,
     #      labels = unique(place.data$day))
     # par(opar)
     ud <- unique(place.data$day)
-    text(mean.x.day[ud], -12, ud, xpd = NA)
+    text(mean.x.day[ud], -16, substr(ud, 1,3), xpd = NA)
   } else{
     warning("no popularity data")
   }

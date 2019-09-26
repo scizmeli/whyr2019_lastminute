@@ -9,7 +9,7 @@ if (!exists("pop")){
 }
 source("codeBP.R")
 
-if (!any(grepl("data", ls()))){
+if (0) { #(!any(grepl("data", ls()))){
   message("Running recommendation engine")
   source("recommendation.R")
 }
