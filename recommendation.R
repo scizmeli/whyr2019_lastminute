@@ -21,7 +21,7 @@ library(dplyr)
 # ggplot(places) + geom_histogram(aes(user_ratings_total), binwidth = 500, bins = 1200)
 
 # places <- places %>% mutate(best = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
-places <- places %>% mutate(best = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
+# places <- places %>% mutate(best = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
 # 
 # unique(places$type)
 # 
@@ -31,10 +31,14 @@ places <- places %>% mutate(best = ifelse(rating > 2.5 & price_level < 2.0, 1, 0
 #   theme(axis.text.x = element_text(angle = 65, vjust = 0.9))
 # 
 # unique(pop$occupancy_text)
-# 
-# mydata <- merge(places, pop, by = "place_id")
+# unique(pop$occupancy_index)
 
+data <- merge(places, pop, by = "place_id")
+data <- data %>% mutate(best = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
 
+# unique(data$occupancy_index)
+
+# mydata %>% filter(occupancy_index > )
 
 
 
