@@ -7,7 +7,7 @@
 
 ## Project outline
 1. offer choice of `type` from available list, show corresponding locations on Warsaw map
-2. for selected type extract popularity info where available
+2. for selected type extract popularity (rating) info where available
 3. add popularity info to map as
    - graphical attribute
    - pop-up panel with specifics (e.g. plot of popularity over time)
