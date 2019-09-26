@@ -3,7 +3,9 @@
 # Benno Pütz
 # 
 
-
+lu <- function(x){
+  length(unique(x))
+}
 #' list of availabble type in \code{table}
 #'
 #' default relies on `places` present on search path
@@ -19,6 +21,17 @@ type.list <- function(table = places, ...){
   return(unique(table$type))
 }
 
+#' Rating for place_id given type
+#'
+#' @param place_id 
+#' @param type 
+#' @param table 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rating <- function(place_id,
                    type,
                    table = places,
@@ -28,6 +41,26 @@ rating <- function(place_id,
     warning('ratings from ',min(ratings), ' to ', 'max(ratings)')
   }
   return(mean(ratings))
+}
+
+#' extract all ratings for given  type
+#'
+#' default relies on `places` present on search path
+#' 
+#' @param type type to rate
+#' @param table 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ratings.for.type <- function(type,
+                             table = places,
+                             ...){
+  type.places <- unique(unlist(subset(table,
+                                      type == type)))
+  sapply(type.places$place_id, rating, type = type)
 }
 
 #' plot average occupancy by day/hour
