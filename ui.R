@@ -16,23 +16,23 @@ ui <- fluidPage(
             
             uiOutput("placeTypes"), 
             
-            radioButtons("dayOfWeek", "Which day of week to go out?",
-                         c("Monday" = 1,
-                           "Tuesday" = 2,
-                           "Wednesday" = 3,
-                           "Thursday" = 4,
-                           "Friday" = 5,
-                           "Saturday" = 6,
-                           "Sunday" = 7
-                           )),
+            # radioButtons("dayOfWeek", "Which day of week to go out?",
+            #              c("Monday" = 1,
+            #                "Tuesday" = 2,
+            #                "Wednesday" = 3,
+            #                "Thursday" = 4,
+            #                "Friday" = 5,
+            #                "Saturday" = 6, 
+            #                "Sunday" = 7
+            #                )),
             
-            sliderInput("hourOfDay", "What hour of day?", 0, 23, 8),
-            
-            sliderTextInput("slideDay", "slide for day?", 
+            sliderTextInput("dayOfWeek", "slide for day?", 
                             choices = c("Monday","Tuesday","Wednesday",
                                         "Thursday", "Friday", "Saturday" ,
                                         "Sunday"),
                             selected = weekdays(now())    ),
+            
+            sliderInput("hourOfDay", "What hour of day?", 0, 23, 8),
             
             # br() element to introduce extra vertical spacing ----
             br()

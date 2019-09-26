@@ -31,10 +31,10 @@ server <- function(input, output, session) {
         if (!is.null(myid))
             popupStr = paste("Name:", points()$name[myid], "Address:", points()$vicinity[myid],
                "Type:", points()$type[myid], "Rating:", points()$rating[myid], sep = "<br/>")
-        
+        p <- points()
         leaflet() %>%
             addTiles() %>%
-            addMarkers(data = head(points()[,1:2], 200), layerId = points()[,3], popup = popupStr)
+            addMarkers(data = p[sample(1:nrow(p), 200),1:2], layerId = p[,3], popup = popupStr)
     })
     
     # Generate a summary of the data ----
