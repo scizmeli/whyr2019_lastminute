@@ -44,7 +44,7 @@ data <- data %>% mutate(recommendation = ifelse(rating > 2.5 & price_level < 2.0
 # unique(data$occupancy_index)
 
 # mydata %>% filter(occupancy_index > )
-
+# unique(data$av_time_spent)
 
 
 
