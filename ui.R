@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyWidgets) # for sliderTextInput
 library(leaflet)
 
 # Define UI for random distribution app ----
@@ -26,6 +27,12 @@ ui <- fluidPage(
                            )),
             
             sliderInput("hourOfDay", "What hour of day?", 0, 23, 8),
+            
+            sliderTextInput("slideDay", "slide for day?", 
+                            choices = c("Monday","Tuesday","Wednesday",
+                                        "Thursday", "Friday", "Saturday" ,
+                                        "Sunday"),
+                            selected = weekdays(now())    ),
             
             # br() element to introduce extra vertical spacing ----
             br()
