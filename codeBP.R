@@ -36,9 +36,11 @@ rating <- function(place_id,
                    type,
                    table = places,
                    ...){
-  ratings <- table[table$place_id == place_id & table$type == type, "rating"]
-  if(length(ratings) > 1 && sd(ratings) != 0){
-    warning('ratings from ',min(ratings), ' to ', 'max(ratings)')
+  ratings <- table[table$place_id == place_id & 
+                     table$type == type,
+                   "rating"]
+  if(length(ratings) > 1 & !is.na(sd(ratings, na.rm=TRUE)) & sd(ratings, na.rm=TRUE) != 0){
+    warning('ratings from ', min(ratings), ' to ', max(ratings))
   }
   return(mean(ratings))
 }
@@ -53,14 +55,14 @@ rating <- function(place_id,
 #'
 #' @return
 #' @export
+
 #'
 #' @examples
-ratings.for.type <- function(type,
+ratings.for.type <- function(mytype,
                              table = places,
                              ...){
-  type.places <- unique(unlist(subset(table,
-                                      type == type)))
-  sapply(type.places$place_id, rating, type = type)
+  type.places <- unique(unlist(table[table$type == mytype, 'place_id']))
+  sapply(places, rating, type = mytype)
 }
 
 #' plot average occupancy by day/hour
