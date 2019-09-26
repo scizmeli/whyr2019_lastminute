@@ -33,13 +33,20 @@ library(dplyr)
 # unique(pop$occupancy_text)
 # unique(pop$occupancy_index)
 
-data <- merge(places, pop, by = "place_id")
-data <- data %>% mutate(best = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
+# colnames(places)[!colnames(places) %in% colnames(pop)]
+
+# places_new <- places %>% select(name, type, rating, price_level, place_id, lat, lng)
+# pop_new <- pop %>% select(occupancy_index, occupancy_text, place_id, av_time_spent)
+
+data <- merge(places[, c("name", "type", "rating", "price_level", "place_id", "lat", "lng")],
+              pop[, c("occupancy_index", "occupancy_text", "place_id", "av_time_spent")],
+              by = "place_id")
+data <- data %>% mutate(recommendation = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
 
 # unique(data$occupancy_index)
 
 # mydata %>% filter(occupancy_index > )
-
+# unique(data$av_time_spent)
 
 
 
