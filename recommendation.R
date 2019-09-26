@@ -36,7 +36,7 @@ library(dplyr)
 # colnames(places)[!colnames(places) %in% colnames(pop)]
 
 places <- places %>% select(name, type, rating, price_level, place_id, lat, lng)
-pop <- pop %>% select(occupancy_index, occupancy_text, place_id)
+pop <- pop %>% select(occupancy_index, occupancy_text, place_id, av_time_spent)
 
 data <- merge(places, pop, by = "place_id")
 data <- data %>% mutate(recommendation = ifelse(rating > 2.5 & price_level < 2.0, 1, 0))
