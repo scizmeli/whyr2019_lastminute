@@ -65,10 +65,10 @@ server <- function(input, output, session) {
     
     output$occlvl <- renderPlot({
         isolate({
-            myid <- currentPT()$id
-            if (!is.null(myid)){
-                occ.plot(points()$id[myid])
-            }
+            #myid <- currentPT()$id
+            #if (!is.null(myid)){
+                occ.plot(points()$id)#[myid])
+            #}
         })
     })
     
