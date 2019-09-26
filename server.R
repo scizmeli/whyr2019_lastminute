@@ -14,19 +14,23 @@ server <- function(input, output, session) {
         pt <- input$mymap_marker_click
     })
     points <- reactive({
+        req(input$dayOfWeek)
+
         pls <- places %>%
             filter(type == input$plTypes)
-        # pts <- strsplit(pls$point, split = ",")
-        # lat = sapply(pts, function(x){as.numeric(x[1])})
-        # long = sapply(pts, function(x){as.numeric(x[2])})
-        #data.frame(long=long, lat=lat)
-        data.frame(long=pls$lng, lat=pls$lat, layerId=1:nrow(pls),name=pls$name,
+
+        #browser()
+        
+        df <- data.frame(long=pls$lng, lat=pls$lat, layerId=1:nrow(pls),name=pls$name,
                    vicinity=pls$vicinity,rating=pls$rating)
+        #occupancy_index=occupancy_index        day=pls$day, hour=pls$hour
+        
     })
     
     
     output$mymap <- renderLeaflet({
         myid <- currentPT()$id
+        #req(myid)
         popupStr = ""
         if (!is.null(myid))
             popupStr = paste("Name:", points()$name[myid], "Address:", points()$vicinity[myid],
