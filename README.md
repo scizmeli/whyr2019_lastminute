@@ -14,6 +14,8 @@
 4. add-ons
    - ratings to better decide
    - time slider to allow fur future planing
+   - more intelligent handling of NAs in ratings or price_level
+       - add check-box for user to include those?
    
 ## Interface
 1. map
