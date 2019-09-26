@@ -45,7 +45,8 @@ ui <- fluidPage(
             # Output: Tabset w/ plot, summary, and table ----
             tabsetPanel(type = "tabs",
                         tabPanel("Plot", 
-                                 leafletOutput("mymap")
+                                 leafletOutput("mymap"),
+                                 plotOutput('occlvl')
                                  )
                         #,tabPanel("Summary", verbatimTextOutput("summary"))
                         #,tabPanel("Table", tableOutput("table"))
