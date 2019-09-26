@@ -162,7 +162,13 @@ occ.plot <- function(place_id,
 ratecol <- function(rating,
                     ...){
   ifelse(is.na(rating),
-         "#808080",
-         (rainbow(6, end = 0.5,rev  =  TRUE))[round(rating)]
+         "#80808040",
+         #(rainbow(5, end = 0.63, rev  =  TRUE))[round(rating)]
+         (c('blue',
+            'cyan',
+            'green',
+            'yellow',
+            'orange',
+            'red'))[rating + 1]
   )
 }
