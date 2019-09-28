@@ -36,8 +36,9 @@ server <- function(input, output, session) {
         
         #browser()
         
-        df <- data.frame(long=pls$lng, lat=pls$lat, layerId=1:nrow(pls),name=pls$name,
-                   vicinity = pls$vicinity, rating=pls$rating)
+        df <- data.frame(long=pls$lng, lat=pls$lat, layerId=1:nrow(pls),name=pls$name, price=pls$price_level,
+                   vicinity = pls$vicinity, rating=pls$rating, ratecol = ratecol(pls$rating),
+                   stringsAsFactors = FALSE)
         #occupancy_index=occupancy_index        day=pls$day, hour=pls$hour
         
     })
@@ -51,17 +52,32 @@ server <- function(input, output, session) {
         #     popupStr = paste("Name:", points()$name[myid], "Address:", points()$vicinity[myid],
         #                      "Type:", points()$type[myid], "Rating:", points()$rating[myid], sep = "<br/>")
         #if (!is.null(myid))
-            popupStr = paste("Name:", points()$name, "Address:", points()$vicinity,
-                             "Type:", points()$type, "Rating:", points()$rating,
-                             sep = "<br/>")
+            popupStr = paste("Name: <b>", points()$name, 
+                             "</b><br/>Address:", points()$vicinity,
+                             "<br/><br/>Type:", points()$type, 
+                             "<br/>Rating:", points()$rating,
+                             ifelse(is.na(points()$price),
+                                    '',
+                                    paste("     Price:", 
+                                          substr("$$$$$",
+                                                 1,
+                                                 round(points()$price)))),
+                             sep = " ")
         p <- points()
         set.seed(1)
+        #browser()
         leaflet() %>%
             addTiles() %>%
-            addMarkers(data = p[sample(1:nrow(p), min(200, nrow(p))), 
-                                1:2], 
-                       layerId = p[,3],
-                       popup = popupStr)
+            #addProviderTiles() %>%
+            addCircleMarkers(data = p[sample(1:nrow(p), min(200, nrow(p))), 
+                                      ], 
+                             layerId = p[,3],
+                             #color = ratecol,
+                             weight = 1,
+                             fillColor = ~ratecol,
+                             fillOpacity = 0.8,
+                             radius = 8,
+                             popup = popupStr)
     })
     
     # output$occlvl <- renderPlot({

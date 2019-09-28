@@ -157,3 +157,18 @@ occ.plot <- function(place_id,
     warning("no popularity data")
   }
 }
+
+
+ratecol <- function(rating,
+                    ...){
+  ifelse(is.na(rating),
+         "#80808040",
+         #(rainbow(5, end = 0.63, rev  =  TRUE))[round(rating)]
+         (c('blue',
+            'cyan',
+            'green',
+            'yellow',
+            'orange',
+            'red'))[rating + 1]
+  )
+}
